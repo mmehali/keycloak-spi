@@ -50,8 +50,33 @@
       <version>6.0.1</version>
       <scope>provided</scope>
     </dependency>
-  </dependencies>
 
+    <!-- https://mvnrepository.com/artifact/org.keycloak/keycloak-adapter-spi -->
+    <dependency>
+      <groupId>org.keycloak</groupId>
+      <artifactId>keycloak-adapter-spi</artifactId>
+      <version>6.0.1</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.keycloak/keycloak-admin-client -->
+    <dependency>
+      <groupId>org.keycloak</groupId>
+      <artifactId>keycloak-admin-client</artifactId>
+      <version>6.0.1</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.keycloak/keycloak-authz-client -->
+    <dependency>
+      <groupId>org.keycloak</groupId>
+      <artifactId>keycloak-authz-client</artifactId>
+      <version>6.0.1</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.keycloak/keycloak-common -->
+<dependency>
+    <groupId>org.keycloak</groupId>
+    <artifactId>keycloak-common</artifactId>
+    <version>6.0.1</version>
+</dependency>
+
+  </dependencies>
   <build>
     <pluginManagement>
       <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->

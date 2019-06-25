@@ -8,7 +8,7 @@ import org.keycloak.services.resource.RealmResourceProviderFactory;
 
 public class INORealmResourceProviderFactory implements RealmResourceProviderFactory {
 
-    public static final String ID = "HELLO 1234";
+    public static final String ID = "ino";
     @Override
     public RealmResourceProvider create(KeycloakSession session) {
         return new INORealmResourceProvider(session);

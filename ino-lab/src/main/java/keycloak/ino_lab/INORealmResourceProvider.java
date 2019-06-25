@@ -17,7 +17,7 @@ public class INORealmResourceProvider implements RealmResourceProvider{
 
     @Override
     public void close() {
-
+    
     }
 
     @Override
@@ -27,7 +27,7 @@ public class INORealmResourceProvider implements RealmResourceProvider{
     }
 
     @GET
-    @Path("test")
+    @Path("mygroup")
     @Produces("text/plain; charset=utf-8")
     public String get() {
         String name = session.getContext().getRealm().getDisplayName();

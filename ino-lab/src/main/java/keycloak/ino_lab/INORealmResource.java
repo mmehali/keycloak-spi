@@ -14,7 +14,7 @@ public class INORealmResource{
         this.session = session;
     }
     @GET
-    @Path("TEST")
+    @Path("mygroup")
     @Produces(MediaType.APPLICATION_JSON)
 
     public Response test(){
