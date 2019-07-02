@@ -21,7 +21,7 @@ public class INORealmResourceProviderFactory implements RealmResourceProviderFac
 
     @Override
     public void postInit(KeycloakSessionFactory factory) {
-
+        
     }
 
     @Override
