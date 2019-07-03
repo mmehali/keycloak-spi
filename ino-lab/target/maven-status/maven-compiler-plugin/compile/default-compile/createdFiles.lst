@@ -1,3 +1,6 @@
-keycloak\ino_lab\INORealmResource.class
-keycloak\ino_lab\INORealmResourceProvider.class
-keycloak\ino_lab\INORealmResourceProviderFactory.class
+keycloak/ino_lab/MECAsAccountProviderFactory.class
+keycloak/ino_lab/Templates.class
+keycloak/ino_lab/MECAsAccountPages.class
+keycloak/ino_lab/Templates$1.class
+keycloak/ino_lab/MECAsAccountProvider$1.class
+keycloak/ino_lab/MECAsAccountProvider.class

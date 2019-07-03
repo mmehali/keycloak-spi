@@ -6,6 +6,8 @@ import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
+import org.keycloak.forms.account.AccountProvider;
+import org.keycloak.forms.account.freemarker.FreeMarkerAccountProvider;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.UserModel;
 import org.keycloak.services.managers.AppAuthManager;
@@ -13,6 +15,7 @@ import org.keycloak.services.managers.Auth;
 import org.keycloak.services.managers.AuthenticationManager;
 import org.keycloak.services.managers.AuthenticationManager.AuthResult;
 import org.keycloak.services.resource.RealmResourceProvider;
+import org.keycloak.theme.FreeMarkerUtil;
 
 public class INORealmResourceProvider implements RealmResourceProvider {
 
@@ -39,8 +42,11 @@ public class INORealmResourceProvider implements RealmResourceProvider {
     @Produces("text/plain; charset=utf-8")
     public String get() { 
         //String groupName = session.getContext().getRealm().getGroups().get(0).getName();
-        //UserModel user = session.users().getUserByUsername("tar", realm);  
-        return "Hello, your group is ";
+        //UserModel user = session.users().getUserByUsername("tar", realm);
+//        UserModel user = this.auth.getUser();
+//        AccountProvider account = this.session.getProvider(AccountProvider.class);
+            this.get
+        return "Hello, your group is " +  this.auth;
     }
 
     private void checkRealmAdmin() {
@@ -50,7 +56,7 @@ public class INORealmResourceProvider implements RealmResourceProvider {
             throw new ForbiddenException("Does not have realm admin role");
         }
     }
-    
+
     @Path("test")
     public INORealmResource getCompanyResource() {
         return new INORealmResource(session);

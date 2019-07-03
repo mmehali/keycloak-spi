@@ -1,0 +1,5 @@
+package keycloak.ino_lab;
+
+public enum MECAsAccountPages {
+    ACCOUNT, PASSWORD, TOTP, FEDERATED_IDENTITY, LOG, SESSIONS, APPLICATIONS, RESOURCES, RESOURCE_DETAIL;
+}
