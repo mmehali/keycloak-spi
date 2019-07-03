@@ -24,6 +24,7 @@ public class INORealmResourceProvider implements RealmResourceProvider {
     public INORealmResourceProvider(KeycloakSession session) {
         this.session = session;
         this.auth = new AppAuthManager().authenticateBearerToken(session, session.getContext().getRealm());
+        //this.auth = new AppAuthManager().authenticateIdentityCookie(session, session.getContext().getRealm());
     }
 
     @Override
@@ -44,9 +45,8 @@ public class INORealmResourceProvider implements RealmResourceProvider {
         //String groupName = session.getContext().getRealm().getGroups().get(0).getName();
         //UserModel user = session.users().getUserByUsername("tar", realm);
 //        UserModel user = this.auth.getUser();
-//        AccountProvider account = this.session.getProvider(AccountProvider.class);
-            this.get
-        return "Hello, your group is " +  this.auth;
+
+        return "Hello, your group is " +  auth;
     }
 
     private void checkRealmAdmin() {

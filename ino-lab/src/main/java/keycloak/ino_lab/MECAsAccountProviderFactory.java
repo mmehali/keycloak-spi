@@ -14,14 +14,8 @@ public class MECAsAccountProviderFactory implements AccountProviderFactory {
 
     @Override
     public Provider create(KeycloakSession session) {
-        logger.error("e");
-        try {
-            return new MECAsAccountProvider(session, freeMarker);
-        } catch (java.lang.NullPointerException e) {
-            freeMarker = new FreeMarkerUtil();
-            return new MECAsAccountProvider(session, freeMarker);
-        }
-
+        logger.error(":P");
+        return new MECAsAccountProvider(session, freeMarker);
     }
 
     @Override

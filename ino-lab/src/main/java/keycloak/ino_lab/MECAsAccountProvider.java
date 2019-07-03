@@ -81,7 +81,7 @@ public class MECAsAccountProvider extends FreeMarkerAccountProvider {
 
         attributes.put("features", new FeaturesBean(identityProviderEnabled, eventsEnabled, passwordUpdateSupported, authorizationSupported));
         attributes.put("account", new AccountBean(user, profileFormData));
-
+        logger.error(":P");
         switch (page) {
             case TOTP:
                 attributes.put("totp", new TotpBean(session, realm, user, uriInfo.getRequestUriBuilder()));
