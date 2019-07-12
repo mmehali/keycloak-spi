@@ -1,0 +1,8 @@
+{
+  "realm": "dev",
+  "auth-server-url": "https://keycloak.demo.web.meca.in.th/auth",
+  "ssl-required": "external",
+  "resource": "login-page",
+  "public-client": true,
+  "confidential-port": 0
+}
