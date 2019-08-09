@@ -11,8 +11,8 @@ build mavenเสร็จแล้ว นำไฟล์ .jarที่ได้
 ### /mygroup
 [keycloak_home_uri]/auth/realms/[realms name]/ino/mygroup
 
-ino = ID ที่กำหนดใน keycloak-spi/ino-lab/src/main/java/keycloak/ino_lab/INORealmResourceProviderFactory.java
-mygroup = Pathที่กำหนดใน keycloak-spi/ino-lab/src/main/java/keycloak/ino_lab/INORealmResourceProvider.java
+ino = ID ที่กำหนดใน ino_lab/INORealmResourceProviderFactory.java
+mygroup = Pathที่กำหนดใน ino_lab/INORealmResourceProvider.java
 [method]
 GET = Get group info
 POST = Join group
