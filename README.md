@@ -31,9 +31,13 @@ POST = ขอ invite token[JWT]
 
 ### ใช้ token โดย
 "GET", "[Keycloak_HOME]/auth/realms/[realms name]/login-actions/action-token?key="+[TOKEN],
+
 ### Handler token
+
 TOKEN_TYPE ใน ino_lab/InviteToken.java ต้องตรงกับ ID ใน ino_lab/InviteTokenHandlerFactory.java
+
 ซึ่งหากตรงดันเมื่อเรียกผ่าน Endpoint 
+
 action-token  จะไปทำตามที่เราเขียนไว้ใน method handleToken ใน ino_lab/InviteTokenHandler.java
 
 
