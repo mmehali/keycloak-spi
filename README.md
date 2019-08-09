@@ -14,9 +14,13 @@ build mavenเสร็จแล้ว นำไฟล์ .jarที่ได้
 ino = ID ที่กำหนดใน ino_lab/INORealmResourceProviderFactory.java
 mygroup = Pathที่กำหนดใน ino_lab/INORealmResourceProvider.java
 [method]
+
 GET = Get group info
+
 POST = Join group
+
 Delete = Leave group
+
 ### /invitetoken
 [Keycloak_HOME]/auth/realms/[realms name]/ino/invitetoken
 
