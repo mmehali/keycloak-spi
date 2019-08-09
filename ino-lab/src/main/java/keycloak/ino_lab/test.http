@@ -1,0 +1,23 @@
+# curl \
+#   -d "client_id=admin-cli" \
+#   -d "username=ice" \
+#   -d "password=ice" \
+#   -d "grant_type=password" \
+#   "http://localhost:8080/auth/realms/test/protocol/openid-connect/token"
+
+curl \
+    -H "Authorization: bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJORlF4RmpWMGxtXzNUUXJKQlBaNzJ4Q3RrUENNV2xUR2hvaDY2MXVEYWdnIn0.eyJqdGkiOiJmOTQwN2Q1Zi05NjBiLTRlOWUtYTVlZC05MTJkZjcwMmM1ZWQiLCJleHAiOjE1NjM5NTM3NzYsIm5iZiI6MCwiaWF0IjoxNTYzOTUzNDc2LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvYXV0aC9yZWFsbXMvdGVzdCIsInN1YiI6ImRmYzRhNTE4LWJmMzctNDkwMy04YTg5LThkYmJkZDY2YWIwMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImFkbWluLWNsaSIsImF1dGhfdGltZSI6MCwic2Vzc2lvbl9zdGF0ZSI6IjZmMjk4N2IxLTdhOGItNGQ0ZS1hZjMyLTEyYWY3ZTk0ZjcwZSIsImFjciI6IjEiLCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJDaGFuYXBhdCBSYWtwb25nbmF0IiwicHJlZmVycmVkX3VzZXJuYW1lIjoiaWNlIiwiZ2l2ZW5fbmFtZSI6IkNoYW5hcGF0IiwiZmFtaWx5X25hbWUiOiJSYWtwb25nbmF0IiwiZW1haWwiOiJjaGFuYXBhdC5yYWtAaG90bWFpbC5jb20ifQ.Ueh2yXcmkIuinV3F6bXwfCGQsJ7AAfaPbLVrQjlWaOdDcqcSQR77IiW0_jX5xkbT7PJ3s2rEROIgGaOotDstBP-lMI1l7cq47Ho22pc_4j4as3UVm8QdUR4QhfF_BC4EXNB2eXjc9kX_Ht5vehZ2kNsfdgJBHMxXuYvCfy45AuRsHsOueVsdRwZHsFVmLCa5ZTY06FMK4nreS3XHF8VuadFuQBDoWIkuVpgNxIb9uPwNeuqDcVgMrdrT402-EMpYXzGsnVH7ewWtZ-7UmCqDO-1-m_WzXaZY_BiwacypjPBxEHhW0KAKUiSLitulPoPvruT_ueSRSApGo20fyMxFSA" \
+    -H 'Accept:text/plain'\
+    -H 'Content-Type:text/plain'\
+    -d 'MECAs'\
+    -i --request GET  "http://localhost:8080/auth/realms/test/ino/invitetoken"
+
+# curl \
+#     -H "Authorization: bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJORlF4RmpWMGxtXzNUUXJKQlBaNzJ4Q3RrUENNV2xUR2hvaDY2MXVEYWdnIn0.eyJqdGkiOiIzZTlmZDIxZi00MWVmLTRjYzUtODJlOS01YTZkZWU0ZDExM2YiLCJleHAiOjE1NjI4MzU1OTcsIm5iZiI6MCwiaWF0IjoxNTYyODM1Mjk3LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvYXV0aC9yZWFsbXMvdGVzdCIsInN1YiI6ImRmYzRhNTE4LWJmMzctNDkwMy04YTg5LThkYmJkZDY2YWIwMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImFkbWluLWNsaSIsImF1dGhfdGltZSI6MCwic2Vzc2lvbl9zdGF0ZSI6IjRiNDMwN2M5LWY5NGEtNGVjNi05ZjJhLTc5OGVlN2NhN2E4MSIsImFjciI6IjEiLCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJhc2Rhc2Rhc2Rhc2QgYXNkYXNkZGQiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJpY2UiLCJnaXZlbl9uYW1lIjoiYXNkYXNkYXNkYXNkIiwiZmFtaWx5X25hbWUiOiJhc2Rhc2RkZCIsImVtYWlsIjoiaWNlemFfYmFiaW5AaG90bWFpbC5jb20ifQ.KId-yqjMehu8tBwBI3Fbf9-BHxHmwMb-4FLxwmFRjqzsV_K_TRXxEc6wEwWe_1ft_GrRfQEwVDApZk3-j-H6hAf8zrnQO5F6lC-E5Zwg4HO_vHS2l5VdjurkfPyFWVtyA4Yh_H5DOyuHdYWX-4K7By-TR1vAzY7C3Nny3j3CopGsuUwpt5U8oMzgaSCg9PMGJW-epxr9o7u-OSoGOLKo9d_zTol7yvvnszphkIz3TcwyIFpqrq8nOI-IhyWld7J1XLMtOFywAmupJy4dZwE5z8GgqbNuEyHOjJtkloPeq0cEWSgtKLgRd09Ksbt8uMnjA7LZaGU3KWjHT5dSi5eELA" \
+#     -H 'Accept:text/plain'\
+#     -H 'Content-Type:text/plain'\
+#     -i --request OPTIONS http://localhost:8080/auth/realms/test/ino
+
+# curl \
+#   --header "Accept: application/json" \
+#   -i --request POST http://localhost:8080/auth/realms/dev/ino/test 
