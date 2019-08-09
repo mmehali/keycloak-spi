@@ -149,9 +149,26 @@ $sizes: $size-1 $size-2 $size-3 $size-4 $size-5 $size-6 $size-7 !default;
 
 $navbar-height: 3.25rem;
 
+
+.container {
+  width:80%;
+  height: auto;
+  overflow: hidden;
+}
+   
+.right {
+   width: 150px;
+   float: right;
+}
+
+.left {
+   float: none;
+   width: auto;
+   overflow: hidden;
+}
  .edit-profile{
     margin: auto;
-    width: 40%;
+    width: 80%;
     padding: 10px; 
     hr{
         border: 2px;
@@ -196,8 +213,4 @@ $navbar-height: 3.25rem;
  .is-main-content{
   background-color: #fff;
  }
-//  .router-link-active{
-//   background:#eee;
-//   color:#444;
-// }
  

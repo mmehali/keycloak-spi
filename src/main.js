@@ -12,7 +12,7 @@ require("./assets/main.scss")
 
 Vue.use(VeeValidate)
 
-var keycloak = Keycloak({
+var keycloak = Keycloak({ //Call Keycloak Server
   url: 'http://localhost:8080/auth',
   realm: 'test',
   clientId: 'inotest'

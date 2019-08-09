@@ -1,16 +1,14 @@
 import axios from "axios";
 import { keycloak } from "./main";
-// const authUrl ='https://keycloak.demo.web.meca.in.th/auth'
-// const realmUrl = '/dev'
+
 var getGroup = function() {
   return axios({
     method: "GET",
     url: "http://localhost:8080/auth/realms/test/ino/mygroup",
     credentials: "include",
     headers: {
-      Accept: "text/plain",
-      "Content-Type": "text/plain",
-      Authorization: "Bearer " + keycloak.token
+      "Accept": "application/json",
+      "Authorization": "Bearer " + keycloak.token
     }
   })
     .then(resData => {
@@ -21,9 +19,43 @@ var getGroup = function() {
     });
 };
 
+var getInviteToken = function(groupp,nameUserInvite) {
+  return axios({
+    method: "POST",
+    url: "http://localhost:8080/auth/realms/test/ino/invitetoken?username="+nameUserInvite+"&group="+groupp,
+    credentials: "include",
+    headers: {
+      Authorization: "Bearer " + keycloak.token
+    },
+  })
+  .then(res => {
+    return res.data;
+  })
+    .catch(err => {
+      alert("No user found");
+    });
+};
+
+    //////////////////////////////////////////////////////////
+    ////                Process InviteToken               ////
+    //// do handleToken method in InviteTokenHandler.java  ////
+    //////////////////////////////////////////////////////////
+var processInviteToken = function(token) {
+  axios({
+    method: "GET",
+    url: "http://localhost:8080/auth/realms/test/login-actions/action-token?key="+token,
+  })
+  .then(res => {
+    alert(res.data);
+  })
+    .catch(err => {
+      alert(err);
+    });
+};
+
 var leaveGroup = function(group) {
   axios({
-    method: "POST",
+    method: "DELETE",
     url: "http://localhost:8080/auth/realms/test/ino/mygroup",
     credentials: "include",
     headers: {
@@ -61,6 +93,9 @@ var updateInfo = function(form) {
   });
 };
 
+/* ******************************************************************** */
+/* *********    NOT USEABLE CORS BLOCK PROBLEM      ******************* */
+/* ******************************************************************** */
 var updatePass = function(form) {
   axios({
     method: "POST",
@@ -83,4 +118,4 @@ var updatePass = function(form) {
   });
 };
 
-export { updateInfo, updatePass, getGroup, leaveGroup };
+export { updateInfo, updatePass, getGroup, leaveGroup, getInviteToken, processInviteToken };

@@ -2,7 +2,7 @@
   <div>
     <form class="edit-profile" @submit.prevent="handleSubmit">
       <h1>Edit Account</h1>
-      <hr>
+      <hr />
       <div class="field">
         <label class="label">Username</label>
         <div class="control has-icons-left has-icons-right">
@@ -16,18 +16,18 @@
             v-model="form.Username"
             :class="{ 'input is-danger': errors.has('Username') }"
             disabled
-          >
+          />
           <span class="icon is-small is-left">
-            <font-awesome-icon icon="user"/>
+            <font-awesome-icon icon="user" />
           </span>
           <span
             v-if="form.Username !== null && !errors.has('Username')"
             class="icon is-small is-right"
           >
-            <font-awesome-icon icon="check"/>
+            <font-awesome-icon icon="check" />
           </span>
           <span v-if="errors.has('Username')" class="icon is-small is-right">
-            <font-awesome-icon icon="exclamation-triangle"/>
+            <font-awesome-icon icon="exclamation-triangle" />
           </span>
           <span class="err-msg">{{ errors.first('Username') }}</span>
         </div>
@@ -44,15 +44,15 @@
             data-vv-as="email"
             v-model="form.Email"
             :class="{ 'input is-danger': errors.has('Email') }"
-          >
+          />
           <span class="icon is-small is-left">
-            <font-awesome-icon icon="envelope"/>
+            <font-awesome-icon icon="envelope" />
           </span>
           <span v-if="form.Email !== null && !errors.has('Email')" class="icon is-small is-right">
-            <font-awesome-icon icon="check"/>
+            <font-awesome-icon icon="check" />
           </span>
           <span v-if="errors.has('Email')" class="icon is-small is-right">
-            <font-awesome-icon icon="exclamation-triangle"/>
+            <font-awesome-icon icon="exclamation-triangle" />
           </span>
           <span class="err-msg">{{ errors.first('Email') }}</span>
         </div>
@@ -69,15 +69,15 @@
             v-validate="{ required: true, regex: /^([^0-9]*)$/ , min:2}"
             v-model="form.FirstName"
             :class="{ 'input is-danger': errors.has('firstName') }"
-          >
+          />
           <span
             v-if="form.FirstName !== null && !errors.has('firstName')"
             class="icon is-small is-right"
           >
-            <font-awesome-icon icon="check"/>
+            <font-awesome-icon icon="check" />
           </span>
           <span v-if="errors.has('firstName')" class="icon is-small is-right">
-            <font-awesome-icon icon="exclamation-triangle"/>
+            <font-awesome-icon icon="exclamation-triangle" />
           </span>
           <span class="err-msg">{{ errors.first('firstName') }}</span>
         </div>
@@ -94,28 +94,23 @@
             v-validate="{ required: true, regex: /^([^0-9]*)$/ , min:2}"
             v-model="form.LastName"
             :class="{ 'input is-danger': errors.has('lastName') }"
-          >
+          />
           <span
             v-if="form.LastName !== null && !errors.has('lastName')"
             class="icon is-small is-right"
           >
-            <font-awesome-icon icon="check"/>
+            <font-awesome-icon icon="check" />
           </span>
           <span v-if="errors.has('lastName')" class="icon is-small is-right">
-            <font-awesome-icon icon="exclamation-triangle"/>
+            <font-awesome-icon icon="exclamation-triangle" />
           </span>
           <span class="err-msg">{{ errors.first('lastName') }}</span>
         </div>
       </div>
       <div align="right">
-        <button class="button is-danger is-outlined">Cancel</button>
         <button type="Submit" class="button is-primary">Save</button>
       </div>
     </form>
-    <!-- test -->
-    <!-- <button class="button" v-on:click="editAcc">TEST</button>
-    <button class="button" v-on:click="updteInfo">UPDATE TEST</button>
-    <button class="button" v-on:click="tarFunc">ปุ่มต้าร์</button> -->
     <button class="button" v-on:click="logout">Logout</button>
   </div>
 </template>
@@ -142,10 +137,11 @@ export default {
     }, 1500);
   },
   methods: {
-    updteInfo() {
+    updateInfo: function() { //Rest Endpoint UpdateForm
       updateInfo(this.form);
+      location.reload();
     },
-    editAcc() {
+    editAcc: function() { //Function GetGroup in Keycloak
       keycloak
         .loadUserProfile()
         .success(profile => {
@@ -158,21 +154,15 @@ export default {
           alert("Failed to load user profile");
         });
     },
-    tarFunc() {
-      getGroup()
-      //keycloak.accountManagement();
-      //alert(getGroup(this.form))
-      //updatePass();
-    },
-    logout() {
+    logout: function() {
       keycloak.logout();
     },
-    handleSubmit() {
+    handleSubmit: function() { //Function SubmitForm
       this.submitted = true;
       this.$validator.validate().then(valid => {
         if (valid) {
           alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.form));
-              updateInfo(this.form);
+          this.updateInfo(); 
         }
       });
     }

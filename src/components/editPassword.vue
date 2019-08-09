@@ -80,11 +80,9 @@
         </div>
       </div>
       <div align="right">
-        <button class="button is-danger is-outlined">Cancel</button>
         <button type="Submit" class="button is-primary">Save</button>
       </div>
     </form>
-    <!-- test -->
   </div>
 </template>
 
@@ -110,10 +108,10 @@ export default {
     }, 1000);
   },
   methods: {
-    updatePass() {
+    updatePass:function() { //Rest Endpoint Update Password **Cors Ploblem**
        updatePass(this.form);
     },
-    getUser() {
+    getUser:function() { //Function GetUser Form Keycloak
       keycloak
         .loadUserProfile()
         .success(profile => {
@@ -123,12 +121,12 @@ export default {
           alert("Failed to load user profile");
         });
     },
-    handleSubmit() {
+    handleSubmit:function() { //Function SubmitForm
       this.submitted = true;
       this.$validator.validate().then(valid => {
         if (valid) {
           alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.form));
-            updatePass(this.form);
+            this.updatePass();
         }
       });
     }
