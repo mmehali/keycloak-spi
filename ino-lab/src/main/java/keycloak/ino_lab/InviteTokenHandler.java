@@ -1,5 +1,7 @@
 package keycloak.ino_lab;
 
+import javax.json.Json;
+import javax.json.JsonObjectBuilder;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.MediaType;
 
@@ -7,10 +9,12 @@ import org.keycloak.authentication.actiontoken.ActionTokenContext;
 import org.keycloak.authentication.actiontoken.ActionTokenHandler;
 import org.keycloak.common.VerificationException;
 import org.keycloak.events.EventType;
+import org.keycloak.forms.login.LoginFormsProvider;
 import org.keycloak.models.GroupModel;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.UserModel;
 import org.keycloak.services.managers.AuthenticationManager;
+import org.keycloak.services.messages.Messages;
 import org.keycloak.sessions.AuthenticationSessionModel;
 
 public class InviteTokenHandler implements ActionTokenHandler<InviteToken> {
@@ -26,20 +30,22 @@ public class InviteTokenHandler implements ActionTokenHandler<InviteToken> {
     @Override
     public Response handleToken(InviteToken token, ActionTokenContext<InviteToken> tokenContext) {
         UserModel user = tokenContext.getAuthenticationSession().getAuthenticatedUser();
-        Object obj = null;
+        final KeycloakSession session = tokenContext.getSession();
+        AuthenticationSessionModel authSession = tokenContext.getAuthenticationSession();
+
         if (user == null) {
-            obj = "TOKEN HANLER USER NULLL";
+            return session.getProvider(LoginFormsProvider.class)
+                    .setAuthenticationSession(authSession)
+                    .setError("Invalid request")
+                    .createErrorPage(Response.Status.BAD_REQUEST);
         } else {
             GroupModel group = tokenContext.getRealm().getGroupById(token.getGroupID());
             user.joinGroup(group);
-            obj = "Join Group finished";
+            return session.getProvider(LoginFormsProvider.class)
+                    .setAuthenticationSession(authSession)
+                    .setSuccess("Join to" + group.getName() +" group successfully")
+                    .createInfoPage();
         }
-        return Response.ok().header("Access-Control-Allow-Origin", "*")
-                            .header("Access-Control-Allow-Credentials", "include") 
-                            .header("Access-Control-Allow-Headers", "Content-Type, Accept, Authorization")
-                            .header("Access-Control-Allow-Methods", "GET, OPTIONS")
-                            .type(MediaType.TEXT_PLAIN)
-                            .entity(obj).build();
     }
 
     @Override

@@ -10,8 +10,8 @@ public class INORealmResourceProviderFactory implements RealmResourceProviderFac
 
     //ID = URI
     //Example
-    //<Keycloak_HOME>/auth/realms/<Realm_Name>/ino/
-    public static final String ID = "ino";
+    //<Keycloak_HOME>/auth/realms/<Realm_Name>/mecas/
+    public static final String ID = "mecas";
     @Override
     public RealmResourceProvider create(KeycloakSession session) {
         return new INORealmResourceProvider(session);

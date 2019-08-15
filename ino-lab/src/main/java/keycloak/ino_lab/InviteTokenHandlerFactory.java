@@ -9,7 +9,7 @@ import org.keycloak.models.KeycloakSessionFactory;
 public class InviteTokenHandlerFactory implements ActionTokenHandlerFactory<InviteToken> {
 
     //Handler token that have TOKEN_TYPE same with this ID
-    public static final String ID = "invite-token";
+    public static final String ID = "invitation";
 
     @Override
     public ActionTokenHandler<InviteToken> create(KeycloakSession session) {

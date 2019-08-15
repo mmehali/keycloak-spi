@@ -1,6 +1,7 @@
-c:\Users\Ice\Desktop\Vue.js\keycloak-vue\src\keycloak-spi\ino-lab\src\main\java\keycloak\ino_lab\InviteTokenHandlerFactory.java
-c:\Users\Ice\Desktop\Vue.js\keycloak-vue\src\keycloak-spi\ino-lab\src\main\java\keycloak\ino_lab\UserInfo.java
-c:\Users\Ice\Desktop\Vue.js\keycloak-vue\src\keycloak-spi\ino-lab\src\main\java\keycloak\ino_lab\InviteToken.java
-c:\Users\Ice\Desktop\Vue.js\keycloak-vue\src\keycloak-spi\ino-lab\src\main\java\keycloak\ino_lab\InviteTokenHandler.java
-c:\Users\Ice\Desktop\Vue.js\keycloak-vue\src\keycloak-spi\ino-lab\src\main\java\keycloak\ino_lab\INORealmResourceProviderFactory.java
-c:\Users\Ice\Desktop\Vue.js\keycloak-vue\src\keycloak-spi\ino-lab\src\main\java\keycloak\ino_lab\INORealmResourceProvider.java
+/home/ridnarong/workspace/keycloak-spi/ino-lab/src/main/java/keycloak/ino_lab/GroupMember.java
+/home/ridnarong/workspace/keycloak-spi/ino-lab/src/main/java/keycloak/ino_lab/InviteTokenHandler.java
+/home/ridnarong/workspace/keycloak-spi/ino-lab/src/main/java/keycloak/ino_lab/INORealmResourceProviderFactory.java
+/home/ridnarong/workspace/keycloak-spi/ino-lab/src/main/java/keycloak/ino_lab/InviteToken.java
+/home/ridnarong/workspace/keycloak-spi/ino-lab/src/main/java/keycloak/ino_lab/InviteTokenHandlerFactory.java
+/home/ridnarong/workspace/keycloak-spi/ino-lab/src/main/java/keycloak/ino_lab/UserInfo.java
+/home/ridnarong/workspace/keycloak-spi/ino-lab/src/main/java/keycloak/ino_lab/INORealmResourceProvider.java

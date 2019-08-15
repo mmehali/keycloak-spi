@@ -1,12 +1,17 @@
 package keycloak.ino_lab;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObjectBuilder;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import org.jboss.resteasy.annotations.cache.NoCache;
 import org.keycloak.models.GroupModel;
 import org.keycloak.models.KeycloakSession;
@@ -39,8 +44,8 @@ public class INORealmResourceProvider implements RealmResourceProvider {
         return this;
     }
 
-    private Response createRes(Object obj) {
-        return Response.ok().header("Access-Control-Allow-Origin", "*")
+    private Response createRes(Object obj, int status) {
+        return Response .status(status).header("Access-Control-Allow-Origin", "*")
                 .header("Access-Control-Allow-Credentials", "include")
                 .header("Access-Control-Allow-Headers", "Content-Type, Accept, Authorization")
                 .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
@@ -48,7 +53,7 @@ public class INORealmResourceProvider implements RealmResourceProvider {
                 
     }
 
-    @Path("mygroup")
+    @Path("groups")
     @OPTIONS
     @NoCache
     public Response preflight(final @Context HttpRequest request) {
@@ -56,7 +61,7 @@ public class INORealmResourceProvider implements RealmResourceProvider {
         return cors.build();
     }
 
-    @Path("invitetoken")
+    @Path("invitations")
     @OPTIONS
     @NoCache
     public Response preflightToken(final @Context HttpRequest request) {
@@ -66,19 +71,19 @@ public class INORealmResourceProvider implements RealmResourceProvider {
     /////////////////////////////////////
     ////    CREATE INVITE TOKEN     ////
     ////////////////////////////////////
-    //<Keycloak_HOME>/auth/realms/<Realm_Name>/ino/invitetoken
-    //Change "/ino" to another in INORealmResourceProviderFactory.java
+    //<Keycloak_HOME>/auth/realms/<Realm_Name>/mecas/invitations
     @POST
-    @Path("invitetoken")
+    @Path("invitations")
     public Response getInviteToken(@QueryParam("username") String username,@QueryParam("group") String group) {
-        Object obj = "";
         String groupID = group;
         String groupName = session.getContext().getRealm().getGroupById(group).getName();
-
+        int status = 200;
+        JsonObjectBuilder builder = Json.createObjectBuilder();
         this.auth = new AppAuthManager().authenticateBearerToken(session);
         //Login require. If not show "Unauthorization"
         if (this.auth == null) {
-            obj = "Unauthorization";
+            builder.add("error", "Unauthorization");
+            status = 401;
         } else {
             UserModel user = session.users().getUserByUsername(username, session.getContext().getRealm());
             //InviteToken Format (userid, exp, compoundAuthenticationSessionId, groupid, groupname, email, username)
@@ -86,77 +91,64 @@ public class INORealmResourceProvider implements RealmResourceProvider {
                 new InviteToken(user.getId(), Time.currentTime()+600, auth.getSession().getId(), 
                                 groupID, groupName, user.getEmail(), user.getUsername());
 
-            //Generate token to JWT
-            obj = token.serialize(session, session.getContext().getRealm(), session.getContext().getUri());
-            if(obj ==null){
-                obj = "Error cannot create token";
-            }         
-        } 
-        return createRes(obj);
+            builder.add("token", token.serialize(session, session.getContext().getRealm(), session.getContext().getUri()));
+        }
+        return createRes(builder.build(), status);
     }
 
     /////////////////////////////////////
     ////    RESPONSE GROUP INFO      ////
     ////    NAME ID USERinGroup     ////
     ////////////////////////////////////
-    //<Keycloak_HOME>/auth/realms/<Realm_Name>/ino/mygroup
-    //Change "/ino" to another in INORealmResourceProviderFactory.java
+    //<Keycloak_HOME>/auth/realms/<Realm_Name>/mecas/groups
     @GET
-    @Path("mygroup")
+    @Path("groups")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getGROUP() throws Exception{
-        Object obj = null;
-        
         //Login require. If not show "Unauthorization"
         this.auth = new AppAuthManager().authenticateBearerToken(session);
         if (this.auth == null) {
-            obj = "Unauthorization";
+            JsonObjectBuilder builder = Json.createObjectBuilder();
+            builder.add("error", "Unauthorization");
+            return createRes(builder.build(), 401);
         } else {
             UserModel user = auth.getUser();
-            //ArrayList<GroupModel> mygroup = new ArrayList<GroupModel>();
-            List<UserModel> members = null;
-            
-            //Create JSON contains name, id, members
-            String json = "[";
-            for (int i = 0; i < user.getGroups().size(); i++) {
-                members = session.users().getGroupMembers(session.getContext().getRealm(), user.getGroups(i, user.getGroups().size()).iterator().next());
-                json += "{";
-                json += "\"name\":\""+user.getGroups(i, user.getGroups().size()).iterator().next().getName()+"\",";
-                json += "\"id\":\""+user.getGroups(i, user.getGroups().size()).iterator().next().getId()+"\",";
-                json += "\"members\":["; 
-                for(int j = 0 ; j < members.size(); j++){
-                    json += "\""+members.get(j).getUsername()+"\"";
+            JsonArrayBuilder groupsBuilder = Json.createArrayBuilder();
 
-                    if(j == members.size()-1)
-                        json += "]";
-                    else
-                        json += ",";
+            for (GroupModel group : user.getGroups()) {
+                JsonObjectBuilder groupBuilder = Json.createObjectBuilder();
+                groupBuilder.add("id", group.getId());
+                groupBuilder.add("name", group.getId());
+                JsonArrayBuilder membersBuilder = Json.createArrayBuilder();
+                for (UserModel member : session.users().getGroupMembers(session.getContext().getRealm(), group)) {
+                    membersBuilder.add(member.getUsername());
                 }
-                if(i == user.getGroups().size()-1)
-                    json += "}]";
-                else
-                    json += "},";
+                groupBuilder.add("members", membersBuilder.build());
+                groupsBuilder.add(groupBuilder.build());
             }
-            obj = json;
+            return createRes(groupsBuilder.build(), 200);
         }
-        return createRes(obj);
     }
 
     /////////////////////////////////////
     ////         Join Group         ////
     ////////////////////////////////////
-    //<Keycloak_HOME>/auth/realms/<Realm_Name>/ino/mygroup
-    //Change "/ino" to another in INORealmResourceProviderFactory.java
+    //<Keycloak_HOME>/auth/realms/<Realm_Name>/mecas/mygroup
     @POST
-    @Path("mygroup")
+    @Path("groups")
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.TEXT_PLAIN)
     public Response joinGROUP(String req) {
-        Object obj = null;
+        JsonObjectBuilder builder = Json.createObjectBuilder();
+        int status = 200;
         //Login and Request require.
         this.auth = new AppAuthManager().authenticateBearerToken(session);
-        if (this.auth == null || req == null) {
-            obj = "Unauthorization Or no request data. ";
+        if (this.auth == null) {
+            builder.add("error", "Unauthorization");
+            status = 401;
+        } else if (req == null) {
+            builder.add("error", "Invalid request data");
+            status = 400;
         } else {
             UserModel user = auth.getUser();
             GroupModel group = null;
@@ -166,33 +158,37 @@ public class INORealmResourceProvider implements RealmResourceProvider {
                     break;
                 }
             }
-
             if (group == null) {
-                obj = req + "GROUP NULL";
+                builder.add("error", "Invalid group");
+                status = 400;
             } else {
                 user.joinGroup(group);
-                obj = "Join to" + group.getName() +" group successfully";
+                builder.add("success", "Join to" + group.getName() +" group successfully");
             }
         }
-        return createRes(obj);
+        return createRes(builder.build(), status);
     }
 
     /////////////////////////////////////
     ////         Leave Group         ///
     ////////////////////////////////////
-    //<Keycloak_HOME>/auth/realms/<Realm_Name>/ino/mygroup
-    //Change "/ino" to another in INORealmResourceProviderFactory.java
+    //<Keycloak_HOME>/auth/realms/<Realm_Name>/mecas/mygroup
     @DELETE
-    @Path("mygroup")
+    @Path("groups")
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.TEXT_PLAIN)
     public Response leaveGROUP(String req) {
-        Object obj = null;
+        JsonObjectBuilder builder = Json.createObjectBuilder();
+        int status = 200;
 
         //Login and Request require.
         this.auth = new AppAuthManager().authenticateBearerToken(session);
-        if (this.auth == null || req == null) {
-            obj = "Unauthorization Or no request data. ";
+        if (this.auth == null) {
+            builder.add("error", "Unauthorization");
+            status = 401;
+        } else if (req == null) {
+            builder.add("error", "Invalid request data");
+            status = 400;
         } else {
             UserModel user = auth.getUser();
             GroupModel group = null;
@@ -205,13 +201,15 @@ public class INORealmResourceProvider implements RealmResourceProvider {
             }
 
             if (group == null) {
-                obj = req + "GROUP NULL";
+                builder.add("error", "Invalid group");
+                status = 400;
             } else {
                 user.leaveGroup(group);
-                obj = "Leave to " + group.getName() +" group successfully";
+                user.joinGroup(group);
+                builder.add("success", "Leave to" + group.getName() +" group successfully");
             }
         }
-        return createRes(obj);
+        return createRes(builder.build(),status);
     }
 
 }
